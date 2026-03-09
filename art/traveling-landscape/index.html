@@ -2,28 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Traveling Landscape — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
-  <script src="../../shared-assets/js/dna.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --black: #0a0a0a; --offwhite: #f0ede6; --dim: #888880; --rule: #2a2a2a; --accent: #c8a882; }
-    body { background: var(--black); color: var(--offwhite); font-family: serif; line-height: 1.6; }
+    body { background: var(--black); color: var(--offwhite); font-family: 'Cormorant Garamond', serif; line-height: 1.6; }
     header { max-width: 900px; margin: 0 auto; padding: 72px 40px 48px; border-bottom: 1px solid var(--rule); }
-    h1 { font-size: clamp(42px, 7vw, 80px); margin-bottom: 32px; }
+    h1 { font-size: clamp(42px, 7vw, 80px); font-weight: 300; line-height: 1.05; margin-bottom: 32px; }
     h1 em { font-style: italic; color: var(--accent); }
     #landscape-stage { width: 100%; background: #fff; position: relative; border-bottom: 1px solid var(--rule); }
+    #landscape-stage canvas { display: block; width: 100% !important; max-width: 1000px; margin: 0 auto; }
+    #controls { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); width: min(900px, 94vw); display: grid; grid-template-columns: 1fr 1fr 1fr auto auto; gap: 12px; z-index: 10; }
+    .ctrl { background: rgba(10,10,10,0.82); border: 1px solid var(--rule); padding: 12px 14px; backdrop-filter: blur(6px); }
+    .ctrl-label { font-family: monospace; font-size: 10px; color: var(--dim); text-transform: uppercase; margin-bottom: 10px; }
+    input[type=range] { width: 100%; accent-color: var(--accent); }
   </style>
 </head>
 <body>
-  <header>
-    <p style="font-family:monospace; font-size:11px; color:var(--dim); letter-spacing:0.18em; text-transform:uppercase; margin-bottom:28px;">Generative Art / 2026</p>
-    <h1>Traveling<br><em>Landscape</em></h1>
-    <p style="font-size:22px; max-width:660px;">A world with an age. Boxes grow from white ground, breathe at <strong>full life</strong>, and return to white.</p>
-  </header>
-  <div id="landscape-stage"></div>
+  <header><h1>Traveling<br><em>Landscape</em></h1><p style="font-size:22px;">A world with an age. Boxes grow from white ground and return to white.</p></header>
+  <div id="landscape-stage">
+    <div id="controls">
+      <div class="ctrl"><div class="ctrl-label">Speed</div><input type="range" id="sl-speed" value="50"></div>
+      <div class="ctrl"><div class="ctrl-label">Density</div><input type="range" id="sl-density" value="50"></div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <script>
-    "use strict";
+    class Rand { constructor(s){this.s=s||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
     class Entity {
       constructor(r,x,z){ this.x=x; this.z=z; this.w=r.range(300,900); this.h=r.range(600,2400); this.d=r.range(300,900); this.totalLife=r.range(18000,55000); this.born=-1; this.dead=false; }
       draw(t){ if(this.born<0)this.born=t; let el=t-this.born; if(el>this.totalLife){this.dead=true;return;} let env=el<this.totalLife*0.25?el/(this.totalLife*0.25):1.0-(el-this.totalLife*0.75)/(this.totalLife*0.25); push(); translate(this.x,-(this.h*env)/2,this.z); fill(168,134,78,env*200); noStroke(); box(this.w,this.h,this.d); pop(); }

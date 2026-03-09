@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Living Commons — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --black: #0a0a0a; --gray: #888; --light: #e8e8e8; --bg: #f9f9f7; }
@@ -23,6 +21,7 @@
     <p style="font-size:17px; color:#2a2a2a;">What does it mean to share space in the digital age? The commons is not a metaphor.</p>
   </section>
   <div id="art-stage"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <script>
     let touches=[];
     function setup(){ const stage=document.getElementById('art-stage'); const cnv=createCanvas(stage.offsetWidth, stage.offsetHeight); cnv.parent('art-stage'); }

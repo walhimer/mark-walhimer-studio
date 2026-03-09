@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Shared Ground — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--black:#070705;--paper:#f0ede6;--dim:#55554e;--rule:#1e1e1a;--accent:#c8a882;}
@@ -16,16 +14,13 @@
   </style>
 </head>
 <body>
-  <header>
-    <p style="font-family:monospace; font-size:10px; color:var(--dim); letter-spacing:0.22em; text-transform:uppercase; margin-bottom:36px;">Ars Electronica Submission / 2026</p>
-    <h1>Shared<br><em>Ground</em></h1>
-    <p style="font-size:23px; max-width:620px;">The same place. Different histories. Two histories in a room — moving apart, the archive diverges.</p>
-  </header>
+  <header><h1>Shared<br><em>Ground</em></h1><p style="font-size:23px; max-width:620px;">The same place. Different histories. Two histories in a room — moving apart, the archive diverges.</p></header>
   <div id="stage"><canvas id="c"></canvas></div>
   <section class="concept">
     <div><h2>The relationship between bodies determines what history is visible</h2><p style="margin-top:20px; color:rgba(240,237,230,0.68);">One person enters. A single thread surfaces. A second person enters. The archive diverges.</p></div>
     <div><h2>What this is not</h2><p style="margin-top:20px; color:rgba(240,237,230,0.68);">This is not a history lesson. It is a function of geometry, not identity.</p></div>
   </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <script>
     let bodyA, bodyB;
     function setup(){ const cnv=createCanvas(windowWidth, 600); cnv.parent('stage'); bodyA=createVector(width/4,height/2); bodyB=createVector(width*3/4,height/2); }

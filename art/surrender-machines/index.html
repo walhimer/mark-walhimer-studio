@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Surrender Machines — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --black: #0a0a0a; --offwhite: #f0ede6; --dim: #888880; --rule: #2a2a2a; --accent: #c8a882; }
-    body { background: var(--black); color: var(--offwhite); font-family: serif; font-weight: 300; line-height: 1.6; }
+    body { background: var(--black); color: var(--offwhite); font-family: serif; line-height: 1.6; }
     header { max-width: 900px; margin: 0 auto; padding: 72px 40px 48px; border-bottom: 1px solid var(--rule); }
     h1 { font-size: clamp(42px, 7vw, 80px); margin-bottom: 32px; }
     h1 em { font-style: italic; color: var(--accent); }
@@ -19,18 +17,15 @@
   </style>
 </head>
 <body>
-  <header>
-    <p style="font-family:monospace; font-size:11px; color:var(--dim); letter-spacing:0.18em; text-transform:uppercase; margin-bottom:28px;">Generative Art / 2026</p>
-    <h1>Surrender<br><em>Machines</em></h1>
-    <p style="font-size:22px; max-width:660px;">Three human emotions — <strong>anger, ego, and attachment</strong> — determine the structure of surrender.</p>
-  </header>
+  <header><h1>Surrender<br><em>Machines</em></h1><p style="font-size:22px;">Three human emotions — <strong>anger, ego, and attachment</strong> — determine the structure of surrender.</p></header>
   <div id="machine-stage">
     <div id="controls">
-      <div class="ctrl"><div class="ctrl-label">Anger</div><input type="range" id="sl-anger" min="0" max="100" value="50"></div>
-      <div class="ctrl"><div class="ctrl-label">Ego</div><input type="range" id="sl-ego" min="0" max="100" value="50"></div>
-      <div class="ctrl"><div class="ctrl-label">Attachment</div><input type="range" id="sl-attach" min="0" max="100" value="50"></div>
+      <div class="ctrl"><div class="ctrl-label">Anger</div><input type="range" id="sl-anger" value="50"></div>
+      <div class="ctrl"><div class="ctrl-label">Ego</div><input type="range" id="sl-ego" value="50"></div>
+      <div class="ctrl"><div class="ctrl-label">Attachment</div><input type="range" id="sl-attach" value="50"></div>
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <script>
     class Column{constructor(x,y,z,r,h){this.pos=createVector(x,y,z);this.r=r;this.h=h;}draw(){push();translate(this.pos.x,this.pos.y,this.pos.z);rotateX(HALF_PI);fill(200,20,80,0.3);noStroke();cylinder(this.r,this.h);pop();}}
     class Gear{constructor(x,y,z,r,t,s){this.pos=createVector(x,y,z);this.r=r;this.thick=t;this.spd=s;this.ang=0;}update(s){this.ang+=this.spd*s;}draw(){push();translate(this.pos.x,this.pos.y,this.pos.z);rotateY(this.ang);fill(15,80,90,0.6);noStroke();cylinder(this.r,this.thick);pop();}}
