@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><title>Living Commons — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
+  <style>body{background:var(--deep);margin:0;overflow:hidden;}</style>
+</head>
+<body><script>
+let pts=[]; function setup(){createCanvas(windowWidth,windowHeight);}
+function draw(){
+  background(24,22,15); pts.forEach(p=>{fill(168,134,78,p.a);noStroke();ellipse(p.x,p.y,100-p.a);p.a-=2;});
+  pts=pts.filter(p=>p.a>0);
+}
+function mousePressed(){pts.push({x:mouseX,y:mouseY,a:100});}
+</script></body></html>

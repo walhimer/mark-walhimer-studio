@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><title>Surrender Machines — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
+  <style>body{background:var(--deep);margin:0;overflow:hidden;}.ctrls{position:absolute;top:20px;left:20px;z-index:10;background:rgba(0,0,0,0.5);padding:15px;}</style>
+</head>
+<body><div class="ctrls"><input type="range" id="a" min="0" max="100"></div>
+<script>
+function setup(){createCanvas(windowWidth,windowHeight,WEBGL);}
+function draw(){
+  background(24,22,15); let v=document.getElementById('a').value;
+  rotateX(frameCount*0.01); rotateY(frameCount*0.01); stroke(168,134,78); noFill();
+  for(let i=0;i<8;i++){ push(); rotateZ(i+v*0.01); box(100+i*30); pop(); }
+}
+</script></body></html>

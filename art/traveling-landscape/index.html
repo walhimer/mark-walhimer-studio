@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><title>Traveling Landscape — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
+  <script src="../../shared-assets/js/dna.js"></script>
+  <style>body{background:var(--deep);margin:0;overflow:hidden;}</style>
+</head>
+<body><script>
+const rng = new Rand(Date.now() % 99991); let camZ = 0;
+function setup(){createCanvas(windowWidth,windowHeight,WEBGL);}
+function draw(){
+  background(24,22,15); camZ-=5; camera(0,-200,camZ,0,0,camZ-1000,0,1,0);
+  for(let z=0;z<15;z++){ push(); translate(sin(z)*400,0,camZ-(z*800)); fill(168,134,78,100); noStroke(); box(150,rng.range(300,800),150); pop(); }
+}
+</script></body></html>
