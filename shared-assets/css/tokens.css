@@ -1,0 +1,18 @@
+:root {
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --paper: #efe9df;
+  --deep: #18160f;
+  --deep-mid: #22201a;
+  --ink: #18160f;
+  --muted: rgba(239,233,223,0.45);
+  --ghost: rgba(239,233,223,0.2);
+  --accent: #a8864e;
+  --rule-dark: rgba(255,255,255,0.07);
+  --sp-10: 40px;
+  --gutter-desktop: 52px;
+  --z-raised: 10;
+  --ls-label: 0.22em;
+  --audio-btn-bg-dark: rgba(24,22,15,0.88);
+}
