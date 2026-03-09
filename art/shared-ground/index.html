@@ -2,17 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Shared Ground — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
-  <style>body { background: #18160f; margin: 0; overflow: hidden; cursor: crosshair; }</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+  <style>body{background:#070705;margin:0;overflow:hidden;cursor:none;}</style>
 </head>
 <body><script>
-let b={x:0,y:0}; function setup(){createCanvas(windowWidth, windowHeight);}
+let bodyA, bodyB, proximity=0;
+function setup(){createCanvas(windowWidth,windowHeight);bodyA=createVector(width/4,height/2);bodyB=createVector(width*3/4,height/2);}
 function draw(){
-  background(24, 22, 15, 20);
-  b.x = lerp(b.x, noise(frameCount*0.01)*width, 0.05);
-  b.y = lerp(b.y, noise(frameCount*0.01+100)*height, 0.05);
-  stroke(168, 134, 78, 150); line(mouseX, mouseY, b.x, b.y);
-  noFill(); ellipse(mouseX, mouseY, 30); ellipse(b.x, b.y, 30);
+  background(7,7,5,20);
+  bodyA.x=lerp(bodyA.x,mouseX,0.05);bodyA.y=lerp(bodyA.y,mouseY,0.05);
+  bodyB.x=lerp(bodyB.x,noise(frameCount*0.01)*width,0.02);bodyB.y=lerp(bodyB.y,noise(frameCount*0.01+100)*height,0.02);
+  proximity=1-constrain(dist(bodyA.x,bodyA.y,bodyB.x,bodyB.y)/width,0,1);
+  stroke(168,134,78,proximity*255);line(bodyA.x,bodyA.y,bodyB.x,bodyB.y);
+  noFill();stroke(200,168,130);ellipse(bodyA.x,bodyA.y,40);ellipse(bodyB.x,bodyB.y,40);
 }
-function windowResized(){ resizeCanvas(windowWidth, windowHeight); }
 </script></body></html>

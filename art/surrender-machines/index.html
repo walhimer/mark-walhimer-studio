@@ -2,20 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Surrender Machines — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
   <style>
-    body { background: #18160f; margin: 0; overflow: hidden; }
-    .ctrls { position: absolute; top: 20px; left: 20px; z-index: 10; background: rgba(0,0,0,0.7); padding: 20px; border: 1px solid rgba(255,255,255,0.1); color: white; font-family: sans-serif; font-size: 10px; }
+    body{background:#18160f;margin:0;overflow:hidden;}
+    .ctrls{position:absolute;top:20px;left:20px;z-index:10;background:rgba(24,22,15,0.9);padding:20px;border:1px solid rgba(255,255,255,0.1);color:#efe9df;font-family:sans-serif;font-size:9px;letter-spacing:2px;}
+    input{display:block;width:150px;margin-top:10px;accent-color:#a8864e;}
   </style>
 </head>
-<body><div class="ctrls">ANGER<br><input type="range" id="a" min="0" max="100" value="50"></div>
+<body>
+<div class="ctrls">ANGER<input type="range" id="sl-anger" value="50">EGO<input type="range" id="sl-ego" value="50">ATTACHMENT<input type="range" id="sl-attach" value="50"></div>
 <script>
-function setup(){ createCanvas(windowWidth, windowHeight, WEBGL); }
+class Column{constructor(x,y,z,r,h){this.pos=createVector(x,y,z);this.r=r;this.h=h;}draw(){push();translate(this.pos.x,this.pos.y,this.pos.z);rotateX(HALF_PI);fill(320,20,80,0.5);noStroke();cylinder(this.r,this.h);pop();}}
+class Gear{constructor(x,y,z,r,t,s){this.pos=createVector(x,y,z);this.r=r;this.thick=t;this.spd=s;this.ang=0;}update(s){this.ang+=this.spd*s;}draw(){push();translate(this.pos.x,this.pos.y,this.pos.z);rotateY(this.ang);fill(15,80,90,0.6);noStroke();cylinder(this.r,this.thick);pop();}}
+let parts=[];
+function setup(){createCanvas(windowWidth,windowHeight,WEBGL);colorMode(HSB,360,100,100,1);for(let i=0;i<10;i++)parts.push(new Column(random(-500,500),0,random(-500,500),20,400));for(let i=0;i<30;i++)parts.push(new Gear(random(-500,500),random(-200,200),random(-500,500),60,20,random(-0.05,0.05)));}
 function draw(){
-  background(0, 0, 5); let v = document.getElementById('a').value;
-  rotateX(frameCount*0.01); rotateY(frameCount*0.01);
-  stroke(40, 50, 70); noFill();
-  for(let i=0; i<8; i++){ push(); rotateZ(i+v*0.01); box(100+i*30); pop(); }
+  background(0,0,5);orbitControl();rotateX(-0.4);
+  let s=document.getElementById('sl-anger').value/50;
+  parts.forEach(p=>{if(p.update)p.update(s);p.draw();});
+  if(document.getElementById('sl-ego').value>70){for(let i=0;i<500;i++){stroke(60,100,100,random(0.5));point(random(-width,width),random(-height,height),random(-500,500));}}
 }
-function windowResized(){ resizeCanvas(windowWidth, windowHeight); }
 </script></body></html>

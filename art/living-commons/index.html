@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Living Commons — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
-  <style>body { background: #18160f; margin: 0; overflow: hidden; }</style>
+  <style>body{background:#18160f;margin:0;overflow:hidden;}</style>
 </head>
 <body><script>
-let pts=[]; function setup(){createCanvas(windowWidth, windowHeight);}
+let touches=[];
+function setup(){createCanvas(windowWidth,windowHeight);}
 function draw(){
-  background(24, 22, 15);
-  pts.forEach(p=>{ fill(168, 134, 78, p.a/100); noStroke(); ellipse(p.x, p.y, 100-p.a); p.a -= 2; });
-  pts = pts.filter(p=>p.a > 0);
+  background(24,22,15);
+  touches.forEach(t=>{fill(168,134,78,t.a/100);noStroke();ellipse(t.x,t.y,t.r);t.r+=1;t.a-=1;});
+  touches=touches.filter(t=>t.a>0);
+  if(touches.length>10) { stroke(168,134,78,50); for(let i=0;i<touches.length-1;i++) line(touches[i].x,touches[i].y,touches[i+1].x,touches[i+1].y); }
 }
-function mousePressed(){ pts.push({x:mouseX, y:mouseY, a:100}); }
-function windowResized(){ resizeCanvas(windowWidth, windowHeight); }
+function mousePressed(){touches.push({x:mouseX,y:mouseY,r:10,a:100});}
 </script></body></html>

@@ -2,25 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Traveling Landscape — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
-  <style>body { background: #18160f; margin: 0; overflow: hidden; }</style>
+  <script src="../../shared-assets/js/dna.js"></script>
+  <style>body{background:#18160f;margin:0;overflow:hidden;}</style>
 </head>
 <body><script>
-class Rand { constructor(s){this.s=(s>>>0)||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
-let rng; let camZ = 0;
-function setup(){ 
-  createCanvas(windowWidth, windowHeight, WEBGL); 
-  rng = new Rand(Date.now() % 99991);
-}
-function draw(){
-  background(0, 0, 5); camZ -= 5;
-  camera(0, -200, camZ, 0, 0, camZ-1000, 0, 1, 0);
-  for(let z=0; z<15; z++){
-    push(); translate(sin(z)*400, 0, camZ-(z*800));
-    fill(40, 50, 70, 0.6); stroke(40, 50, 100, 0.8);
-    box(150, 400, 150); pop();
+"use strict";
+class Entity {
+  constructor(rng,x,z,colors){
+    this.x=x;this.z=z;this.w=rng.range(300,900);this.h=rng.range(600,2400);this.d=rng.range(300,900);
+    this.colors=colors;this.breathAmp=rng.range(0.015,0.06);this.breathPhase=rng.range(0,Math.PI*2);
+    this.totalLife=rng.range(18000,55000);this.growDur=this.totalLife*0.25;this.fadeDur=this.totalLife*0.25;this.holdDur=this.totalLife*0.5;
+    this.born=-1;this.dead=false;
   }
-  if(camZ < -12000) camZ = 0;
+  envelope(elapsed){
+    if(elapsed<this.growDur) return elapsed/this.growDur;
+    if(elapsed<this.growDur+this.holdDur) return 1.0;
+    return 1.0 - (elapsed-this.growDur-this.holdDur)/this.fadeDur;
+  }
+  draw(t){
+    if(this.born<0)this.born=t;const elapsed=t-this.born;if(elapsed>this.totalLife){this.dead=true;return;}
+    const env=this.envelope(elapsed);const breath=1.0+this.breathAmp*sin(t*0.0008+this.breathPhase)*env;
+    push();translate(this.x,-(this.h*env*breath)/2,this.z);scale(1,env*breath,1);
+    fill(hue(this.colors[0]),80,90,env*0.7);noStroke();box(this.w,this.h,this.d);pop();
+  }
 }
-function windowResized(){ resizeCanvas(windowWidth, windowHeight); }
+let rng, entities=[], camZ=0, palette;
+function setup(){createCanvas(windowWidth,windowHeight,WEBGL);rng=new Rand(Date.now()%99991);palette=[color('#a8864e'),color('#c8b99a')];for(let i=0;i<40;i++)entities.push(new Entity(rng,rng.range(-5000,5000),rng.range(-20000,0),[palette[0],palette[1]]));}
+function draw(){
+  background(24,22,15);camZ-=5;camera(sin(frameCount*0.007)*280,-180+sin(frameCount*0.01)*50,camZ,0,-180,camZ-1000,0,1,0);
+  ambientLight(255);directionalLight(255,255,255,0,1,-1);
+  entities.forEach(e=>e.draw(millis()));entities=entities.filter(e=>!e.dead);
+  if(camZ<-20000)camZ=0;
+}
 </script></body></html>
