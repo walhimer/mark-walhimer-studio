@@ -2,23 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Traveling Landscape — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
-  <script src="../../shared-assets/js/dna.js"></script>
-  <style>body{background:#18160f;margin:0;overflow:hidden;}</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
+  <style>body { background: #18160f; margin: 0; overflow: hidden; }</style>
 </head>
 <body><script>
+class Rand { constructor(s){this.s=(s>>>0)||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
 let rng; let camZ = 0;
 function setup(){ 
   createCanvas(windowWidth, windowHeight, WEBGL); 
   rng = new Rand(Date.now() % 99991);
 }
 function draw(){
-  background(24, 22, 15); camZ -= 5;
+  background(0, 0, 5); camZ -= 5;
   camera(0, -200, camZ, 0, 0, camZ-1000, 0, 1, 0);
   for(let z=0; z<15; z++){
     push(); translate(sin(z)*400, 0, camZ-(z*800));
-    fill(168, 134, 78, 150); noStroke();
+    fill(40, 50, 70, 0.6); stroke(40, 50, 100, 0.8);
     box(150, 400, 150); pop();
   }
   if(camZ < -12000) camZ = 0;

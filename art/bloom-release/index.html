@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Bloom / Release — Mark Walhimer</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
-  <script>
-    /* Built-in DNA Engine to prevent path errors */
-    class Rand { constructor(s){this.s=(s>>>0)||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
-  </script>
-  <style>body{background:#18160f;margin:0;overflow:hidden;}#lifebar{position:fixed;bottom:0;left:0;height:3px;background:#a8864e;width:0%;z-index:100;}</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
+  <style>
+    body { background: #18160f; margin: 0; overflow: hidden; }
+    #lifebar { position: fixed; bottom: 0; left: 0; height: 3px; background: #a8864e; width: 0%; z-index: 100; }
+  </style>
 </head>
 <body><div id="lifebar"></div>
 <script>
+class Rand { constructor(s){this.s=(s>>>0)||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
 let rng; let blooms = [];
 function setup(){
   createCanvas(windowWidth, windowHeight);
@@ -18,7 +18,7 @@ function setup(){
   rng = new Rand(Date.now() % 99991);
 }
 function draw(){
-  background(24, 22, 15);
+  background(0, 0, 5);
   if(frameCount % 60 == 0 && blooms.length < 22) {
     blooms.push({x:rng.range(width*0.1,width*0.9), y:rng.range(height*0.1,height*0.9), h:rng.range(0,360), r:0, max:rng.range(80,200)});
   }
