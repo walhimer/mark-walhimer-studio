@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Bloom / Release — Mark Walhimer</title>
-  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
-  <script src="../../shared-assets/js/dna.js"></script>
+  <script>
+    /* Built-in DNA Engine to prevent path errors */
+    class Rand { constructor(s){this.s=(s>>>0)||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
+  </script>
   <style>body{background:#18160f;margin:0;overflow:hidden;}#lifebar{position:fixed;bottom:0;left:0;height:3px;background:#a8864e;width:0%;z-index:100;}</style>
 </head>
 <body><div id="lifebar"></div>
