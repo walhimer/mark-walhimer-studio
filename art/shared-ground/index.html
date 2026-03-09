@@ -4,12 +4,16 @@
   <meta charset="UTF-8"><title>Shared Ground — Mark Walhimer</title>
   <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.11/p5.min.js"></script>
-  <style>body{background:var(--deep);margin:0;overflow:hidden;cursor:crosshair;}</style>
+  <style>body{background:#18160f;margin:0;overflow:hidden;cursor:crosshair;}</style>
 </head>
 <body><script>
-let b={x:0,y:0}; function setup(){createCanvas(windowWidth,windowHeight);}
+let b={x:0,y:0}; function setup(){createCanvas(windowWidth, windowHeight);}
 function draw(){
-  background(24,22,15,20); b.x=lerp(b.x,noise(frameCount*0.01)*width,0.05); b.y=lerp(b.y,noise(frameCount*0.01+100)*height,0.05);
-  stroke(168,134,78,150); line(mouseX,mouseY,b.x,b.y); ellipse(mouseX,mouseY,20); ellipse(b.x,b.y,20);
+  background(24, 22, 15, 20);
+  b.x = lerp(b.x, noise(frameCount*0.01)*width, 0.05);
+  b.y = lerp(b.y, noise(frameCount*0.01+100)*height, 0.05);
+  stroke(168, 134, 78, 150); line(mouseX, mouseY, b.x, b.y);
+  noFill(); ellipse(mouseX, mouseY, 30); ellipse(b.x, b.y, 30);
 }
+function windowResized(){ resizeCanvas(windowWidth, windowHeight); }
 </script></body></html>
