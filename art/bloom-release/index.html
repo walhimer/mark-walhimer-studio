@@ -7,9 +7,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
   <script src="../../shared-assets/js/dna.js"></script>
   <style>
-    body { background: #18160f; margin: 0; overflow: hidden; font-family: var(--sans); }
-    #lifebar-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.07); }
-    #lifebar { height: 100%; width: 0%; background: #a8864e; transition: width 0.1s linear; }
+    body { background: var(--deep); margin: 0; overflow: hidden; font-family: var(--sans); }
+    #lifebar-wrap { position: fixed; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--rule-dark); }
+    #lifebar { height: 100%; width: 0%; background: var(--accent); transition: width 0.1s linear; }
   </style>
 </head>
 <body>
@@ -54,13 +54,13 @@ class Bloom {
 const rng=new Rand(Date.now()%99991);
 let blooms=[];let spawnCount=0;let nextSpawn=600;let gardenFull=false;let fullAt=-1;let dyingStarted=false;let startTime=null;let noteAssignments=shufflePool(rng);
 
-function setup(){const c=createCanvas(windowWidth,windowHeight);c.id('defaultCanvas0');}
+function setup(){createCanvas(windowWidth,windowHeight); }
 function draw(){
   const t=millis();const dt=16.67;if(!startTime)startTime=t;
-  drawingContext.clearRect(0,0,width,height);drawingContext.fillStyle='#18160f';drawingContext.fillRect(0,0,width,height);
+  drawingContext.fillStyle='#18160f';drawingContext.fillRect(0,0,width,height);
   if(spawnCount<22 && t>nextSpawn){
-    blooms.push(new Bloom(rng,width,height,noteAssignments[spawnCount]));
-    if(hornReady)horn.triggerAttackRelease(noteAssignments[spawnCount],'2n');
+    let b = new Bloom(rng,width,height,noteAssignments[spawnCount]);
+    blooms.push(b); if(hornReady)horn.triggerAttackRelease(b.note,'2n');
     spawnCount++;nextSpawn=t+1800;if(spawnCount==22){gardenFull=true;fullAt=t;}
   }
   if(gardenFull && !dyingStarted && t>fullAt+8000){
