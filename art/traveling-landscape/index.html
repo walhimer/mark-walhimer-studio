@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><title>Traveling Landscape — Mark Walhimer</title>
+  <link rel="stylesheet" href="../../shared-assets/css/tokens.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --black: #0a0a0a; --offwhite: #f0ede6; --dim: #888880; --rule: #2a2a2a; --accent: #c8a882; }
@@ -26,8 +27,9 @@
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.min.js"></script>
+  <script src="../../shared-assets/js/dna.js"></script>
   <script>
-    class Rand { constructor(s){this.s=s||1;} next(){const x=Math.sin(this.s++)*10000; return x-Math.floor(x);} range(a,b){return a+this.next()*(b-a);} }
+    "use strict";
     class Entity {
       constructor(r,x,z){ this.x=x; this.z=z; this.w=r.range(300,900); this.h=r.range(600,2400); this.d=r.range(300,900); this.totalLife=r.range(18000,55000); this.born=-1; this.dead=false; }
       draw(t){ if(this.born<0)this.born=t; let el=t-this.born; if(el>this.totalLife){this.dead=true;return;} let env=el<this.totalLife*0.25?el/(this.totalLife*0.25):1.0-(el-this.totalLife*0.75)/(this.totalLife*0.25); push(); translate(this.x,-(this.h*env)/2,this.z); fill(168,134,78,env*200); noStroke(); box(this.w,this.h,this.d); pop(); }
